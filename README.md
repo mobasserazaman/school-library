@@ -1,15 +1,15 @@
-# 📚 School Library Management System – JWTify Extension
+# School Library Management System – JWTify Extension
 
 A secure, role-based School Library Management System built with **Spring Boot**, **Spring Security**, **JWT Authentication**, **Spring Data JPA**, **PostgreSQL**, and **Docker**. This project expands the core functionality of the [`JWTify`](https://github.com/mobasserazaman/JWTify) authentication app to support book borrowing, user management, and admin control.
 
-## ✨ Features
+## Features
 
-### 🔐 Authentication & Authorization
+### Authentication & Authorization
 - JWT-based login, registration, and token refresh
 - Role-based access control (`STUDENT`, `ADMIN`)
 - Secure password storage with BCrypt
 
-### 📘 Library Management
+### Library Management
 - Students can:
   - View available books
   - Borrow and return books
@@ -19,7 +19,7 @@ A secure, role-based School Library Management System built with **Spring Boot**
   - Add and remove students
   - View all borrow records
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - Java 17+
 - Spring Boot 3
