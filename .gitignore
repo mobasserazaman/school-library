@@ -1,0 +1,49 @@
+# Java
+*.class
+*.jar
+*.war
+*.iml
+*.log
+
+# Maven
+target/
+!**/src/main/**/target/
+
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+application-dev.yml
+application-prod.yml
+
+# Logs
+*.log
+logs/
+spring.log
+
+# Docker
+docker-compose.override.yml
+*.pid
+
+# PostgreSQL
+*.db
+pgdata/

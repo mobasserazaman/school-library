@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: librarydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: abc123
+    ports:
+      - "5432:5432"
+  
+  librarymanagementapplication:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/librarydb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: abc123
+    ports:
+      - "8080:8080"
+

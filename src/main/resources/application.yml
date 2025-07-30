@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/librarydb
+    username: user
+    password: abc123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  my-secret: my-very-long-secret-key-that-is-at-least-32-bytes!
+
+admin:
+  username: admin
+  password: admin123
