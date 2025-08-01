@@ -57,4 +57,8 @@ public class BorrowService {
     public List<BorrowRecord> getUserHistory(Long userId){
         return borrowRepository.findByUserId(userId);
     }
+
+    public List<BorrowRecord> getAllRecords(){
+        return borrowRepository.findAll();
+    }
 }

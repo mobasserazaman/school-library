@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobasserazaman.LibraryManagement.entity.BorrowRecord;
+import com.mobasserazaman.LibraryManagement.repository.BorrowRepository;
 import com.mobasserazaman.LibraryManagement.repository.UserRepository;
 import com.mobasserazaman.LibraryManagement.security.JwtService;
 import com.mobasserazaman.LibraryManagement.service.BorrowService;
@@ -21,33 +22,42 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/borrow")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('STUDENT')")
 public class BorrowController {
 
     private final BorrowService borrowService;
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    private Long getCurrentUserId(HttpServletRequest request){
+    private Long getCurrentUserId(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String username = jwtService.extractUsername(token);
-        return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")).getId();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found")).getId();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/records")
+    public List<BorrowRecord> getAllBorrowRecords(){
+        return borrowService.getAllRecords();
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/{bookId}")
-    public BorrowRecord borrowBook(@PathVariable Long bookId, HttpServletRequest request){
+    public BorrowRecord borrowBook(@PathVariable Long bookId, HttpServletRequest request) {
         Long userId = getCurrentUserId(request);
         return borrowService.borrowBook(userId, bookId);
     }
-    
+
+    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/return/{bookId}")
-    public BorrowRecord returnBook(@PathVariable Long bookId, HttpServletRequest request){
+    public BorrowRecord returnBook(@PathVariable Long bookId, HttpServletRequest request) {
         Long userId = getCurrentUserId(request);
         return borrowService.returnBook(userId, bookId);
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/history")
-    public List<BorrowRecord> getUserBorrowHistory(HttpServletRequest request){
+    public List<BorrowRecord> getUserBorrowHistory(HttpServletRequest request) {
         Long userId = getCurrentUserId(request);
         return borrowService.getUserHistory(userId);
 
