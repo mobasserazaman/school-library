@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mobasserazaman.LibraryManagement.entity.BorrowRecord;
-import com.mobasserazaman.LibraryManagement.repository.BorrowRepository;
 import com.mobasserazaman.LibraryManagement.repository.UserRepository;
 import com.mobasserazaman.LibraryManagement.security.JwtService;
 import com.mobasserazaman.LibraryManagement.service.BorrowService;
@@ -41,21 +40,18 @@ public class BorrowController {
         return borrowService.getAllRecords();
     }
 
-    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/{bookId}")
     public BorrowRecord borrowBook(@PathVariable Long bookId, HttpServletRequest request) {
         Long userId = getCurrentUserId(request);
         return borrowService.borrowBook(userId, bookId);
     }
 
-    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/return/{bookId}")
     public BorrowRecord returnBook(@PathVariable Long bookId, HttpServletRequest request) {
         Long userId = getCurrentUserId(request);
         return borrowService.returnBook(userId, bookId);
     }
 
-    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/history")
     public List<BorrowRecord> getUserBorrowHistory(HttpServletRequest request) {
         Long userId = getCurrentUserId(request);
