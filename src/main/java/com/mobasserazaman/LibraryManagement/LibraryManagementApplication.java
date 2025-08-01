@@ -17,13 +17,8 @@ public class LibraryManagementApplication {
 	public CommandLineRunner createAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder){
 		return args -> {
 			if(userRepository.findByUsername("admin").isEmpty()){
-				User admin = User.builder().username("admin").password(passwordEncoder.encode("admin123")).role(Role.ADMIN).build();
-				System.out.println(passwordEncoder.encode("admin123"));
-				System.out.println(passwordEncoder.getClass().getName());
-				User adminUser = userRepository.save(admin);
-				System.out.println(adminUser);
-
-				System.out.println("Admin user created: username=admin, password=admin123");
+				User admin = User.builder().studentId(999999999L).username("admin").password(passwordEncoder.encode("admin123")).role(Role.ADMIN).build();
+				userRepository.save(admin);
 			}
 		};
 	}

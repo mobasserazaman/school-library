@@ -2,6 +2,7 @@ package com.mobasserazaman.LibraryManagement.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mobasserazaman.LibraryManagement.entity.User;
 import com.mobasserazaman.LibraryManagement.service.UserService;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,13 +36,16 @@ public class UserController {
     }
 
     @PostMapping()
-    public User addStudent(@RequestBody User user) { 
-        return userService.addStudent(user);
+    public ResponseEntity<?> addStudent(@Valid @RequestBody User user) { 
+        userService.addStudent(user);
+        return ResponseEntity.ok("User registered") ;
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
-    public void deleteStudent(@PathVariable Long id){
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id){
         userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     

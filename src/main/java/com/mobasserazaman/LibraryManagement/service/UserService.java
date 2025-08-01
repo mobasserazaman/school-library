@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.mobasserazaman.LibraryManagement.entity.Role;
 import com.mobasserazaman.LibraryManagement.entity.User;
+import com.mobasserazaman.LibraryManagement.exception.DuplicateStudentIDException;
 import com.mobasserazaman.LibraryManagement.repository.UserRepository;
 
 @Service
@@ -22,13 +23,19 @@ public class UserService {
     }
 
     public User addStudent(User user){
+        if(userRepository.findByUsername(user.getUsername()).isPresent()){
+            throw new DuplicateStudentIDException("Username already exists");
+        }
+        if(userRepository.findByStudentId(user.getStudentId()).isPresent()){
+            throw new DuplicateStudentIDException("Student ID already exists");
+        }
         user.setRole(Role.STUDENT);
         user.setPassword(encoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
     public void deleteUser(Long id){
-        userRepository.deleteById(id);
+        userRepository.deleteByStudentId(id);
     }
     
 }
